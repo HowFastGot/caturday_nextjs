@@ -39,7 +39,7 @@ function GridContainer({
 
 					return (
 						<figure key={id} className={`${gridItemsStyles}`}>
-							<Link href={`/breeds/${id.toLocaleLowerCase()}`}>
+							<Link href={`/breeds/${breedName.toLocaleLowerCase()}`}>
 								<Image
 									src={url}
 									alt='Cat photo'
