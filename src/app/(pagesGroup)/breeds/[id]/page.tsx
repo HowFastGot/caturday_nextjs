@@ -61,6 +61,6 @@ export async function generateStaticParams() {
 	).then((res) => res.json());
 
 	return breedArr.map((breed) => ({
-		id: breed.id,
+		id: `/breeds/${breed.id}`,
 	}));
 }
