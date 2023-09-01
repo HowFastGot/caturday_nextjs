@@ -14,7 +14,7 @@ function GridContainer({
 	const bigImgIndex = [3, 8, 13, 18];
 
 	return (
-		<div className='mt-5 w-full h-full'>
+		<div className='mt-5 w-full h-full min-h-[420px]'>
 			<div className='grid grid-cols-3  gap-5 auto-rows-[minmax(120px,_140px)_minmax(100px,_140px)_minmax(100px,_140px)]'>
 				{catCarts.map(({id, url, breeds}, index) => {
 					const breedName =
@@ -39,7 +39,7 @@ function GridContainer({
 
 					return (
 						<figure key={id} className={`${gridItemsStyles}`}>
-							<Link href={`/breeds/${breedName.toLocaleLowerCase()}`}>
+							<Link href={`/breeds/${id.toLocaleLowerCase()}`}>
 								<Image
 									src={url}
 									alt='Cat photo'

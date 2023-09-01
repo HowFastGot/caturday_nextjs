@@ -37,7 +37,6 @@ function GalleryPage() {
 		<PageContainer>
 			<BackArrow_Title title='gallery' />
 			<UploadImgButton />
-
 			<GalleryContainer />
 			<GridContainer catCarts={catCarts} isGalleryPage={true} />
 		</PageContainer>

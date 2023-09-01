@@ -21,7 +21,7 @@ function GalleryContainer() {
 		modifyDefaultBreedNamesList();
 	}, [modifyDefaultBreedNamesList]);
 	return (
-		<ul className='min-h-[156px] mt-5 px-5 flex-[1_1_100%] bg-prewhite rounded-[20px] flex justify-between items-center gap-x-5 gap-y-0 flex-wrap pb-5'>
+		<ul className='!self-start min-h-[156px] mt-5 px-5 bg-prewhite rounded-[20px] flex justify-between items-center gap-x-5 gap-y-0 flex-wrap pb-5'>
 			<GalleryInput
 				title='order'
 				defaultOptionValue={0}

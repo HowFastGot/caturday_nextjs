@@ -56,11 +56,19 @@ async function BreedInfoPage({params}: {params: {id: string}}) {
 export default BreedInfoPage;
 
 export async function generateStaticParams() {
-	const breedArr: BreedsType[] = await fetch(
-		'https://api.thecatapi.com/v1/breeds'
-	).then((res) => res.json());
 
-	return breedArr.map((breed) => ({
-		id: `/breeds/${breed.name.toLocaleLowerCase()}`,
+	const catCartArr: ICatCart[] = await fetch(
+		`https://api.thecatapi.com/v1/images`,
+		{
+			headers: {
+				'x-api-key': process.env.API_KEY ?? '',
+			},
+		}
+	)
+		.then((res) => res.json())
+		.catch((e) => console.log('Unknow Error happend>>', e));
+
+	return catCartArr.map((cart) => ({
+		id: `/breeds/${cart.id.toLocaleLowerCase()}`,
 	}));
 }
