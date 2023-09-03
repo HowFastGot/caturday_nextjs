@@ -38,26 +38,22 @@ function GalleryContainer({
 		<ul className='!self-start min-h-[156px] mt-5 px-5 bg-prewhite rounded-[20px] flex justify-between items-center gap-x-5 gap-y-0 flex-wrap pb-5'>
 			<GalleryInput
 				title='order'
-				defaultOptionValue={0}
 				selectOptList={['Random', 'Desc', 'Asc']}
 				setPropertyFuntion={setFetchCartOrder}
 			/>
 			<GalleryInput
 				title='type'
-				defaultOptionValue={1}
 				selectOptList={['All', 'Static', 'Animated']}
 				setPropertyFuntion={setMimeType}
 			/>
 			<GalleryInput
 				title='breed'
-				defaultOptionValue={0}
 				selectOptList={localBreedNames}
 				setPropertyFuntion={setQueryBreed}
 			/>
 
 			<GalleryInput
 				title='limit'
-				defaultOptionValue={0}
 				selectOptList={[
 					'5 items per page',
 					'10 items per page',
