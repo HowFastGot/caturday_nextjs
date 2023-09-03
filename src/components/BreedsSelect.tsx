@@ -1,32 +1,26 @@
+import useBreadSearch from '@/hooks/useBreadSearch';
 import {ChangeEvent} from 'react';
 
 function BreedsSelect({
 	changeQueryBreed,
-	breedsList,
 }: {
 	changeQueryBreed: (breedName: string) => void;
-	breedsList: string[];
 }) {
+	const {breedDataObj, setBreedDataObj} = useBreadSearch();
+	const breedsList = breedDataObj.map((breedObj) => breedObj.name);
+
 	const getBreedIdFromSelectOption = (name: string): string => {
-		const nameSplit = name.split(' ');
+		const breedResultObj = breedDataObj.find(
+			(obj) => obj.name.toLocaleLowerCase() === name.toLocaleLowerCase()
+		);
 
-		if (nameSplit.length === 1) {
-			const id: string = name.slice(0, 4);
-			return id;
-		} else {
-			let id = '';
+		const id = breedResultObj?.id;
 
-			nameSplit.map((namePart, index) => {
-				if (index == 0) {
-					id += namePart.slice(0, 1);
-				} else {
-					id += namePart.slice(0, 3);
-				}
-			});
+		if (!id) return '';
 
-			return id.toLocaleLowerCase();
-		}
+		return id?.toLocaleLowerCase();
 	};
+
 	const handleSelectClick = (e: ChangeEvent<HTMLSelectElement>) => {
 		const selectedBreed = e.target.value;
 

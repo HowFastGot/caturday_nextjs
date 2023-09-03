@@ -21,6 +21,18 @@ const nextConfig = {
 				port: '',
 				pathname: '/**',
 			},
+			{
+				protocol: 'https',
+				hostname: '28.media.tumblr.com',
+				port: '',
+				pathname: '/**',
+			},
+			{
+				protocol: 'https',
+				hostname: 'cdn1.theimageapi.com',
+				port: '',
+				pathname: '/**',
+			},
 		],
 	},
 };

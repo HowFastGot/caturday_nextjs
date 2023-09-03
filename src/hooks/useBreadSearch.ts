@@ -3,7 +3,9 @@ import {useHttp} from './useHttpHook';
 import {BreedsType} from '@/types';
 
 function useBreadSearch() {
-	const [breedNames, setBreedNames] = useState<string[]>([]);
+	const [breedDataObj, setBreedDataObj] = useState<
+		{name: string; id: string}[]
+	>([]);
 
 	const {request} = useHttp();
 
@@ -13,17 +15,20 @@ function useBreadSearch() {
 				'https://api.thecatapi.com/v1/breeds'
 			);
 
-			const breedsNameList = breedsArray.map(({name}) => {
-				return name;
+			const breedsInfoObj = breedsArray.map(({name, id}) => {
+				return {
+					name,
+					id,
+				};
 			});
 
-			setBreedNames(breedsNameList);
+			setBreedDataObj(breedsInfoObj);
 		}
 
 		fetchAllBreeds();
 	}, [request]);
 
-	return {breedNames, setBreedNames};
+	return {breedDataObj, setBreedDataObj};
 }
 
 export default useBreadSearch;

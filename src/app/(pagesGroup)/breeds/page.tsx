@@ -29,7 +29,7 @@ function Breeds() {
 	const incButtonRef: IBtnRef = useRef() as IBtnRef;
 
 	const {request} = useHttp();
-	const {breedNames, setBreedNames} = useBreadSearch();
+	const {breedDataObj, setBreedDataObj} = useBreadSearch();
 
 	const rollBackDefaultBtnStyle = (
 		btnRef: IBtnRef,
@@ -131,10 +131,7 @@ function Breeds() {
 	return (
 		<PageContainer>
 			<BackArrow_Title title='Breads' />
-			<BreedsSelect
-				changeQueryBreed={(breedName: string) => setQueryBreed(breedName)}
-				breedsList={breedNames}
-			/>
+			<BreedsSelect changeQueryBreed={setQueryBreed} />
 			<LimitSelect
 				changeQueryLimit={(limit: string) => setQueryCatCartsLimit(limit)}
 			/>

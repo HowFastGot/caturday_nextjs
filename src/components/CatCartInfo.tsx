@@ -1,10 +1,20 @@
 import {BreedsType} from '@/types';
 
 function CatCartInfo({catInfo}: {catInfo: BreedsType[]}) {
-	const [breedInformation] = catInfo;
+	const defaultBreedInfo = {
+		name: 'Unknown',
+		description: 'Unknown',
+		temperament: 'Unknown',
+		origin: 'Unknown',
+		weight: {
+			imperial: 'Unknown',
+		},
+		life_span: 'Unknown',
+	};
+	const [breedInformation] = catInfo ?? [defaultBreedInfo];
 
 	return (
-		<div className='border-2 border-solid border-pale_peach rounded-[20px] mt-[50px] px-10 pb-10 font-medium leading-normal '>
+		<div className='w-full border-2 border-solid border-pale_peach rounded-[20px] mt-[50px] px-10 pb-10 font-medium leading-normal '>
 			<h2 className='inline-block relative left-2/4 -translate-x-2/4 -translate-y-2/4 px-10 py-[5px] rounded-[20px] text-[36px] text-black bg-white '>
 				{breedInformation.name}
 			</h2>
@@ -31,7 +41,7 @@ function CatCartInfo({catInfo}: {catInfo: BreedsType[]}) {
 						<li>
 							Weight:{' '}
 							<span className='text-dark_gray font-normal'>
-								{breedInformation.weight.imperial}
+								{breedInformation.weight?.imperial}
 							</span>
 						</li>
 						<li>

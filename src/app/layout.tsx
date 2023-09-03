@@ -13,6 +13,7 @@ import VoteIconImg from '/public/assets/navigation/vote-table.svg';
 import BreedIconImg from '/public/assets/navigation/pet-breeds.svg';
 import GalleryIconImg from '/public/assets/navigation/images-search.svg';
 
+
 type NavigationCart = {
 	src: string;
 	path: string;
@@ -33,9 +34,8 @@ export const metadata: Metadata = {
 };
 
 const bodyStyles = clsx(
-	'bg-prewhite',
-	jost.className,
-	'max-w-container mx-auto pl-2.5 pr-5'
+	'bg-prewhite max-w-container mx-auto pl-2.5 pr-5',
+	jost.className
 );
 
 const navigationParams: NavigationCart[] = [
@@ -64,10 +64,10 @@ const navigationParams: NavigationCart[] = [
 
 export default function RootLayout({
 	children,
-	toolbar,
+	uploadModal,
 }: {
 	children: React.ReactNode;
-	toolbar: React.ReactNode;
+	uploadModal: React.ReactNode;
 }) {
 	return (
 		<html lang='en'>
@@ -82,6 +82,7 @@ export default function RootLayout({
 						/>
 					</Link>
 				</header>
+
 				<main className='min-h-[501px] h-full relative flex justify-between items-start gap-20'>
 					<aside className='sticky top-2.5 mt-20  inline-block h-[450px] w-[446px]'>
 						<br />
@@ -114,6 +115,7 @@ export default function RootLayout({
 						{children}
 					</section>
 				</main>
+				{uploadModal}
 			</body>
 		</html>
 	);

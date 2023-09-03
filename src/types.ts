@@ -52,3 +52,6 @@ export interface IUserAction {
 	catId: string;
 	category: 'Likes' | 'Favourites' | 'Dislikes';
 }
+
+export type Order = 'Random' | 'Desc' | 'Asc';
+export type MimeContent = 'jpeg,png' | 'gif' | '';

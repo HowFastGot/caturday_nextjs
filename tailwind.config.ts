@@ -24,6 +24,7 @@ const config: Config = {
 			gray: '#C4C4C4',
 			borderColor: 'rgba(255, 255, 255, 0.60)',
 			catCartHover: 'rgba(255, 134, 142, 0.60)',
+			modal_bg: 'rgba(29, 29, 29, 0.60)',
 		},
 		extend: {
 			colors: {
@@ -53,7 +54,13 @@ const config: Config = {
 				upload_red: "url('/assets/gallery/upload_red.svg')",
 				upload_wh: "url('/assets/gallery/upload_wh.svg')",
 
-				//
+				x_wh_icon: "url('/assets/x_wh.svg')",
+				x_red_icon: "url('/assets/x_red.svg')",
+
+				not_found: "url('/assets/not-found.png')",
+
+				'succsess-mark': "url('/assets/gallery/succsessMark.svg')",
+				'error-mark': "url('/assets/gallery/error_uploading.svg')",
 			},
 		},
 	},

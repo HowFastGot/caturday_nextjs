@@ -16,6 +16,9 @@
   .nav-cart-btn {
     @apply mt-5 box-border h-[36px] w-[130px] rounded-[10px] bg-white text-center text-xs font-medium text-peach hover:bg-pale_peach
   }
+  .nav-cart-btn.active {
+    @apply bg-peach text-white
+  }
 
   .flex-wrapper {
     @apply flex items-center justify-center;
@@ -100,6 +103,36 @@
     @apply !outline !outline-2 !outline-pale_peach !rounded-[10px] 
   }
 
+
+  .loading-img::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: 30px;
+    top: 30%;
+    width: 17px;
+    height: 17px;
+    background: url("/assets/gallery/loading.png") center/cover no-repeat;
+    animation: rotaite .7s ease infinite ;
+  }
+}
+
+@keyframes rotaite {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 :root {
@@ -137,6 +170,7 @@ html,
 body {
   height: auto;
   width: 100%;
+  min-height: 100vh;
   font-family: var(--font-family);
   font-size: 100%;
   line-height: 1;

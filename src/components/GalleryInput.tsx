@@ -1,15 +1,18 @@
+import {MimeContent, Order} from '@/types';
 import clsx from 'clsx';
 
 function GalleryInput({
 	title,
-	defaultOptionValue,
+
 	selectOptList,
 	children,
+	setPropertyFuntion,
 }: {
 	title: string;
-	defaultOptionValue: number;
+
 	selectOptList: string[];
 	children?: React.ReactNode;
+	setPropertyFuntion: (param: any) => void;
 }) {
 	const selectStyles = clsx(
 		'w-full py-3 px-2.5 rounded-[10px] cursor-pointer hover:outline hover:outline-2 hover:outline-pale_peach'
@@ -30,15 +33,18 @@ function GalleryInput({
 		<li className='flex-[1_1_48%] pt-2.5 leading-[24px] last:!pt-[14px]  last:flex last:justify-between last:items-center last:gap-2.5'>
 			<label className={labelStyles}>
 				<span className={spanStyles}>{title}</span>
-				<select name={title} id={title} className={selectStyles}>
+				<select
+					name={title}
+					id={title}
+					className={selectStyles}
+					onChange={(e) =>
+						setPropertyFuntion(e.target.value.toLocaleLowerCase())
+					}
+				>
 					{selectOptList[0] ? (
 						selectOptList.map((name, id) => {
 							return (
-								<option
-									key={name}
-									value={name}
-									selected={id === defaultOptionValue}
-								>
+								<option key={name} value={name} defaultValue={selectOptList}>
 									{name}
 								</option>
 							);

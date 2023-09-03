@@ -1,6 +1,7 @@
 'use client';
 
 import {useEffect, useState} from 'react';
+import {usePathname} from 'next/navigation';
 
 import {useRouter} from 'next/navigation';
 import clsx from 'clsx';
@@ -15,6 +16,8 @@ interface INavifationCartProps {
 }
 
 function NavifationCart({path, src, title, blurImg}: INavifationCartProps) {
+	const pathName = usePathname();
+
 	const router = useRouter();
 	const cartClasses = clsx(
 		'border-borderColor relative h-[198px] w-[138px] rounded-[20px] border-4 border-solid  hover:border-white',
@@ -22,8 +25,12 @@ function NavifationCart({path, src, title, blurImg}: INavifationCartProps) {
 			'bg-green': title === 'BREEDS',
 			'bg-orange': title === 'GALLERY',
 			'bg-pale_blue': title === 'VOTING',
+			'border-pale_peach': path === pathName,
 		}
 	);
+	const navigationBtnStyles = clsx('nav-cart-btn', {
+		active: path === pathName,
+	});
 
 	return (
 		<>
@@ -34,12 +41,13 @@ function NavifationCart({path, src, title, blurImg}: INavifationCartProps) {
 							src={src}
 							alt='Navigation image'
 							className=' rounded-[20px]'
-							placeholder='blur'
-							blurDataURL={blurImg}
 						/>
 					</figure>
 				</Link>
-				<button className='nav-cart-btn' onClick={() => router.push(path)}>
+				<button
+					className={navigationBtnStyles}
+					onClick={() => router.push(path)}
+				>
 					{title}
 				</button>
 			</li>

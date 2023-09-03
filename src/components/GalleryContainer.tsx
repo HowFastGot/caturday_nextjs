@@ -3,39 +3,56 @@ import {useCallback, useEffect, useMemo, useState} from 'react';
 import useBreadSearch from '@/hooks/useBreadSearch';
 import GalleryInput from './GalleryInput';
 import PaginationBtn from './PaginationBtn';
+import {MimeContent, Order} from '@/types';
 
-function GalleryContainer() {
+interface GalleryProps {
+	setQueryBreed: (breed: string) => any;
+	setQueryLimit: (limit: string) => any;
+	setFetchCartOrder: (order: Order) => any;
+	setMimeType: (mime: 'static' | 'animated') => any;
+}
+
+function GalleryContainer({
+	setQueryBreed,
+	setQueryLimit,
+	setFetchCartOrder,
+	setMimeType,
+}: GalleryProps) {
 	const [localBreedNames, setLocalBreedNames] = useState<string[]>([]);
 
-	const {breedNames, setBreedNames} = useBreadSearch();
+	const {breedDataObj, setBreedDataObj} = useBreadSearch();
 
 	const mamorizedBreedNames = useMemo(() => {
-		return breedNames;
-	}, [breedNames]);
+		return breedDataObj.map((breedObj) => breedObj.name);
+	}, [breedDataObj]);
 
 	const modifyDefaultBreedNamesList = useCallback(() => {
-		setLocalBreedNames((prev) => ['None', ...mamorizedBreedNames]);
+		setLocalBreedNames(() => ['None', ...mamorizedBreedNames]);
 	}, [mamorizedBreedNames]);
 
 	useEffect(() => {
 		modifyDefaultBreedNamesList();
 	}, [modifyDefaultBreedNamesList]);
+
 	return (
 		<ul className='!self-start min-h-[156px] mt-5 px-5 bg-prewhite rounded-[20px] flex justify-between items-center gap-x-5 gap-y-0 flex-wrap pb-5'>
 			<GalleryInput
 				title='order'
 				defaultOptionValue={0}
 				selectOptList={['Random', 'Desc', 'Asc']}
+				setPropertyFuntion={setFetchCartOrder}
 			/>
 			<GalleryInput
 				title='type'
 				defaultOptionValue={1}
 				selectOptList={['All', 'Static', 'Animated']}
+				setPropertyFuntion={setMimeType}
 			/>
 			<GalleryInput
 				title='breed'
 				defaultOptionValue={0}
 				selectOptList={localBreedNames}
+				setPropertyFuntion={setQueryBreed}
 			/>
 
 			<GalleryInput
@@ -47,6 +64,7 @@ function GalleryContainer() {
 					'15 items per page',
 					'20 items per page',
 				]}
+				setPropertyFuntion={setQueryLimit}
 			>
 				<PaginationBtn />
 			</GalleryInput>

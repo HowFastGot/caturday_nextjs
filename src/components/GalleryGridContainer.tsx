@@ -1,26 +1,26 @@
-import {useRouter} from 'next/navigation';
+import {ICatCart} from '@/types';
+import clsx from 'clsx';
 import Image from 'next/image';
 
-import clsx from 'clsx';
-import {ICatCart} from '@/types';
-
-function GridContainer({catCarts}: {catCarts: ICatCart[]}) {
-	const router = useRouter();
-
-	const handleNewPageRoute = (id: string) => {
-		router.prefetch(`/breeds/${id.toLocaleLowerCase()}`);
-		router.push(`/breeds/${id.toLocaleLowerCase()}`);
-	};
-
+export default function GalleryGridContainer({
+	catCarts,
+}: {
+	catCarts: ICatCart[];
+}) {
 	const bigImgIndex = [3, 8, 13, 18];
+
+	if (catCarts.length === 0) {
+		return (
+			<div className='text-center w-full text-peach text-3xl'>
+				Such cats do not exist!
+			</div>
+		);
+	}
 
 	return (
 		<div className='mt-5 w-full h-full min-h-[420px]'>
 			<div className='h-full grid grid-cols-3  gap-5 auto-rows-[minmax(120px,_140px)_minmax(100px,_140px)_minmax(100px,_140px)]'>
 				{catCarts.map(({id, url, breeds}, index) => {
-					const breedName =
-						(breeds[0] && breeds[0]?.name) ?? 'Unknown breed name (';
-
 					const gridItemsStyles = clsx(
 						'relative group bg-gray rounded-[20px] cursor-pointer',
 						{
@@ -39,11 +39,7 @@ function GridContainer({catCarts}: {catCarts: ICatCart[]}) {
 					);
 
 					return (
-						<figure
-							key={id}
-							className={`${gridItemsStyles}`}
-							onClick={() => handleNewPageRoute(id)}
-						>
+						<figure key={id} className={`${gridItemsStyles}`}>
 							<Image
 								src={url}
 								alt='Cat photo'
@@ -53,7 +49,7 @@ function GridContainer({catCarts}: {catCarts: ICatCart[]}) {
 								fill
 							/>
 
-							<BreedHoverModal breedName={breedName} />
+							<FavoriteIconModal />
 						</figure>
 					);
 				})}
@@ -62,14 +58,10 @@ function GridContainer({catCarts}: {catCarts: ICatCart[]}) {
 	);
 }
 
-function BreedHoverModal({breedName}: {breedName: string}) {
+function FavoriteIconModal() {
 	return (
-		<div className='absolute hidden top-0 left-0 w-full h-full rounded-[20px] bg-catCartHover text-peach backdrop-opacity-60 group-hover:block first-line:z-20'>
-			<h6 className=' !opacity-100 rounded-[10px] absolute bottom-2.5 left-2/4 -translate-x-2/4 w-[90%] px-10 py-[5px] bg-white bg-opacity-100 text-center'>
-				{breedName}
-			</h6>
+		<div className='absolute hidden top-0 left-0 w-full h-full rounded-[20px] bg-catCartHover text-peach backdrop-opacity-60  z-20 group-hover:flex justify-center items-center'>
+			<span className='bg-red_small_heart bg-white inline-block w-10 h-10 bg-no-repeat bg-center rounded-[10px] hover:bg-peach hover:bg-white_solid_small_heart'></span>
 		</div>
 	);
 }
-
-export default GridContainer;

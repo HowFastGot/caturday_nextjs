@@ -18,7 +18,11 @@ async function BreedInfoPage({params}: {params: {id: string}}) {
 	}
 
 	const catData: ICatCart = await catDataResp.json();
-	const breedId = catData.breeds[0].id;
+
+	const breedId = catData.breeds && catData.breeds[0]?.id;
+
+	const breedName: string | number =
+		breedId?.slice(0, 1).toLocaleUpperCase() + breedId?.slice(1);
 
 	const {base64} = (await generateBlur(catData.url)) as {base64: string};
 	return (
@@ -26,7 +30,7 @@ async function BreedInfoPage({params}: {params: {id: string}}) {
 			<PageContainer>
 				<BackArrow_Title title='Breeds' bgClass='!bg-pale_peach' />
 				<span className='inline-block px-[30px] py-[5px] text-center bg-peach rounded-[10px] text-xl leading-[30px] font-medium text-white'>
-					{breedId.slice(0, 1).toLocaleUpperCase() + breedId.slice(1)}
+					{typeof breedName !== 'string' ? 'Unknown' : breedName}
 				</span>
 
 				<figure className='relative w-full h-[360px] mt-5'>
