@@ -19,7 +19,7 @@ function GridContainer({catCarts}: {catCarts: ICatCart[]}) {
 			<div className='h-full grid grid-cols-3  gap-5 auto-rows-[minmax(120px,_140px)_minmax(100px,_140px)_minmax(100px,_140px)]'>
 				{catCarts.map(({id, url, breeds}, index) => {
 					const breedName =
-						(breeds[0] && breeds[0]?.name) ?? 'Unknown breed name (';
+						(breeds && breeds[0]?.name) ?? 'Unknown breed name (';
 
 					const gridItemsStyles = clsx(
 						'relative group bg-gray rounded-[20px] cursor-pointer',
@@ -41,7 +41,7 @@ function GridContainer({catCarts}: {catCarts: ICatCart[]}) {
 					return (
 						<figure
 							key={id}
-							className={`${gridItemsStyles}`}
+							className={gridItemsStyles}
 							onClick={() => handleNewPageRoute(id)}
 						>
 							<Image
