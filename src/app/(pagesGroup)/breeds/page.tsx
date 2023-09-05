@@ -1,6 +1,6 @@
 'use client';
 
-import {useState, useEffect, useRef, useCallback, useMemo} from 'react';
+import {useState, useEffect, useRef, useCallback} from 'react';
 
 import PageContainer from '@/components/PageContainer';
 import GridContainer from '@/components/GridContainer';
@@ -9,9 +9,12 @@ import BreedsSelect from '@/components/BreedsSelect';
 import LimitSelect from '@/components/LimitSelect';
 
 import {useHttp} from '@/hooks/useHttpHook';
-import useBreadSearch from '@/hooks/useBreadSearch';
+
+import loadingImg from '/public/assets/Loading.png';
 
 import {ICatCart} from '@/types';
+import Image from 'next/image';
+import srickyContainerChanger from '@/utils/srickyContainerChanger/srickyContainerChanger';
 
 interface IBtnRef {
 	current: HTMLButtonElement;
@@ -29,7 +32,6 @@ function Breeds() {
 	const incButtonRef: IBtnRef = useRef() as IBtnRef;
 
 	const {request} = useHttp();
-	const {breedDataObj, setBreedDataObj} = useBreadSearch();
 
 	const rollBackDefaultBtnStyle = (
 		btnRef: IBtnRef,
@@ -128,32 +130,36 @@ function Breeds() {
 		);
 	}, [request, handleNewCartsFetch, defaultQueryCatCartsLimit, queryBreed]);
 
+	useEffect(() => {
+		srickyContainerChanger(isLoading);
+	}, [isLoading]);
+
 	return (
 		<PageContainer>
-			<BackArrow_Title title='Breads' />
-			<BreedsSelect changeQueryBreed={setQueryBreed} />
-			<LimitSelect
-				changeQueryLimit={(limit: string) => setQueryCatCartsLimit(limit)}
-			/>
-			<button
-				className='w-[30px] h-10'
-				onClick={() => handleCatSorting(catCarts, 'desc')}
-				ref={descButtonRef}
-			>
-				<i className='inline-block bg-a_b_icon hover:bg-a_b_red_icon h-full w-full bg-center bg-no-repeat hover:outline hover:outline-2 hover:outline-pale_peach rounded-[10px]'></i>
-			</button>
-			<button
-				className='w-[30px] h-10'
-				onClick={() => handleCatSorting(catCarts, 'inc')}
-				ref={incButtonRef}
-			>
-				<i className='inline-block bg-b_a_icon hover:bg-b_a_red_icon  h-full w-full bg-center bg-no-repeat  hover:outline hover:outline-2 hover:outline-pale_peach rounded-[10px]'></i>
-			</button>
+			<div className='flex items-start justify-start gap-x-2.5'>
+				<BackArrow_Title title='Breads' />
+				<BreedsSelect changeQueryBreed={setQueryBreed} />
+				<LimitSelect
+					changeQueryLimit={(limit: string) => setQueryCatCartsLimit(limit)}
+				/>
+				<button
+					className='w-[30px] h-10'
+					onClick={() => handleCatSorting(catCarts, 'desc')}
+					ref={descButtonRef}
+				>
+					<i className='inline-block bg-a_b_icon hover:bg-a_b_red_icon h-full w-full bg-center bg-no-repeat hover:outline hover:outline-2 hover:outline-pale_peach rounded-[10px]'></i>
+				</button>
+				<button
+					className='w-[30px] h-10'
+					onClick={() => handleCatSorting(catCarts, 'inc')}
+					ref={incButtonRef}
+				>
+					<i className='inline-block bg-b_a_icon hover:bg-b_a_red_icon  h-full w-full bg-center bg-no-repeat  hover:outline hover:outline-2 hover:outline-pale_peach rounded-[10px]'></i>
+				</button>
+			</div>
 
 			{isLoading ? (
-				<div className='text-3xl text-peach font-extrabold text-center h-full'>
-					Loading
-				</div>
+				<LoadingComponent />
 			) : (
 				<GridContainer
 					catCarts={catCartsOrder.length > 1 ? catCartsOrder : catCarts}
@@ -163,3 +169,17 @@ function Breeds() {
 	);
 }
 export default Breeds;
+
+function LoadingComponent() {
+	return (
+		<figure className='w-full min-h-[420px] flex justify-center items-center '>
+			<Image
+				src={loadingImg}
+				alt='Loading img'
+				className='animate-spin'
+				placeholder='blur'
+				priority
+			/>
+		</figure>
+	);
+}

@@ -1,10 +1,17 @@
-function LoadingVoitePage() {
+import Image from 'next/image';
+import loadingImg from '/public/assets/Loading.png';
+
+function LoadingPage() {
 	return (
-		<section className='loadingVoitePage h-full bg-green'>
-			<h1 className='font-bold text-3xl text-center'>
-				Loading Voiting Page Loading...
-			</h1>
-		</section>
+		<figure className='w-full main_container flex justify-center items-center '>
+			<Image
+				src={loadingImg}
+				alt='Loading img'
+				className='animate-spin'
+				placeholder='blur'
+				priority
+			/>
+		</figure>
 	);
 }
-export default LoadingVoitePage;
+export default LoadingPage;

@@ -29,7 +29,7 @@ function UserImageFeedbackTriggets({
 					})
 				}
 			>
-				<button disabled={loading}>
+				<button className='disabled:opacity-50' disabled={loading}>
 					<Image
 						src={likeWhIcon}
 						alt='White icon smile'
@@ -37,34 +37,33 @@ function UserImageFeedbackTriggets({
 					/>
 				</button>
 			</li>
-			<li className='user_trigger bg-peach'>
-				<button
-					onClick={() =>
-						handleUserAction({
-							action: 'added',
-							catId: catId,
-							time: Date.now(),
-							category: 'Favourites',
-						})
-					}
-					disabled={loading}
-				>
+			<li
+				className='user_trigger bg-peach cursor-pointer'
+				onClick={() =>
+					handleUserAction({
+						action: 'added',
+						catId: catId,
+						time: Date.now(),
+						category: 'Favourites',
+					})
+				}
+			>
+				<button className='disabled:opacity-50' disabled={loading}>
 					<Image src={heartIcon} alt='White heart' className=' min-w-[20px]' />
 				</button>
 			</li>
-			<li className='user_trigger bg-orange'>
-				<button
-					onClick={() =>
-						handleUserAction({
-							action: 'added',
-							catId: catId,
-							time: Date.now(),
-							category: 'Dislikes',
-						})
-					}
-					className='disabled:opacity-50'
-					disabled={loading}
-				>
+			<li
+				className='user_trigger bg-orange cursor-pointer'
+				onClick={() =>
+					handleUserAction({
+						action: 'added',
+						catId: catId,
+						time: Date.now(),
+						category: 'Dislikes',
+					})
+				}
+			>
+				<button className='disabled:opacity-50' disabled={loading}>
 					<Image
 						src={dislikeIcon}
 						alt='White dislike icon'

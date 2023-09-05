@@ -16,7 +16,7 @@ function GridContainer({catCarts}: {catCarts: ICatCart[]}) {
 
 	return (
 		<div className='mt-5 w-full h-full min-h-[420px]'>
-			<div className='h-full grid grid-cols-3  gap-5 auto-rows-[minmax(120px,_140px)_minmax(100px,_140px)_minmax(100px,_140px)]'>
+			<div className='h-full grid grid-cols-3 gap-5 auto-rows-[minmax(120px,_140px)]'>
 				{catCarts.map(({id, url, breeds}, index) => {
 					const breedName =
 						(breeds && breeds[0]?.name) ?? 'Unknown breed name (';
@@ -33,8 +33,7 @@ function GridContainer({catCarts}: {catCarts: ICatCart[]}) {
 								index === 13 ||
 								index === 17 ||
 								index === 18,
-							'col-span-2':
-								index === 3 || index === 8 || index === 13 || index === 18,
+							'col-span-2': bigImgIndex.includes(index),
 						}
 					);
 

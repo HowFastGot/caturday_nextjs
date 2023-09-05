@@ -1,8 +1,17 @@
+import Image from 'next/image';
+import loadingImg from '/public/assets/Loading.png';
+
 function LoadingBreedsPage() {
 	return (
-		<section className='loadingVoitePage h-full bg-peach'>
-			<h1 className='font-bold text-3xl'>Loading Breeds Page Loading...</h1>
-		</section>
+		<figure className='w-full main_container flex justify-center items-center '>
+			<Image
+				src={loadingImg}
+				alt='Loading img'
+				className='animate-spin'
+				placeholder='blur'
+				priority
+			/>
+		</figure>
 	);
 }
 export default LoadingBreedsPage;

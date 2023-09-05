@@ -9,17 +9,19 @@ export default function GalleryGridContainer({
 }) {
 	const bigImgIndex = [3, 8, 13, 18];
 
+	console.log(catCarts);
+
 	if (catCarts.length === 0) {
 		return (
-			<div className='text-center w-full text-peach text-3xl'>
+			<div className='text-center w-full text-peach text-3xl mb-auto'>
 				Such cats do not exist!
 			</div>
 		);
 	}
 
 	return (
-		<div className='mt-5 w-full h-full min-h-[420px]'>
-			<div className='h-full grid grid-cols-3  gap-5 auto-rows-[minmax(120px,_140px)_minmax(100px,_140px)_minmax(100px,_140px)]'>
+		<section className='gallery_grid w-full h-full'>
+			<div className='h-full grid grid-cols-3 gap-5 auto-rows-[minmax(120px,_140px)_minmax(100px,_140px)_minmax(100px,_140px)]'>
 				{catCarts.map(({id, url, breeds}, index) => {
 					const gridItemsStyles = clsx(
 						'relative group bg-gray rounded-[20px] cursor-pointer',
@@ -54,7 +56,7 @@ export default function GalleryGridContainer({
 					);
 				})}
 			</div>
-		</div>
+		</section>
 	);
 }
 

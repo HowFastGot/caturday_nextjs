@@ -1,4 +1,3 @@
-import {MimeContent, Order} from '@/types';
 import clsx from 'clsx';
 
 function GalleryInput({

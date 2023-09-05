@@ -55,3 +55,21 @@ export interface IUserAction {
 
 export type Order = 'Random' | 'Desc' | 'Asc';
 export type MimeContent = 'jpeg,png' | 'gif' | '';
+
+export interface IPastedImg {
+	url: string;
+	name: string;
+	file: File | null;
+}
+
+export interface iServerUploadResp {
+	approved: 0 | 1;
+	height: number;
+	id: string;
+	original_filename: string;
+	pending: number;
+	url: string;
+	width: number;
+}
+
+export type Path = '/dislike-cats' | '/favorite-cats' | '/like-cats';

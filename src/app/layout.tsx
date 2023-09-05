@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 };
 
 const bodyStyles = clsx(
-	'bg-prewhite max-w-container mx-auto pl-2.5 pr-5',
+	'bg-prewhite max-w-container mx-auto pl-2.5 pr-5 min-h-max',
 	jost.className
 );
 
@@ -83,35 +83,37 @@ export default function RootLayout({
 					</Link>
 				</header>
 
-				<main className='min-h-[501px] h-full relative flex justify-between items-start gap-20'>
-					<aside className='sticky top-2.5 mt-20  inline-block h-[450px] w-[446px]'>
-						<br />
-						<h6 className={styles.greeting_text}>Hi!👋</h6>
-						<p className='mt-[10px]  text-desc '>
-							Welcome to MacPaw Bootcamp 2023
-						</p>
+				<main className='relative main-wrapper flex justify-between items-start gap-20'>
+					<div className='relative sticky-container h-full'>
+						<aside className='sticky top-2.5 mt-20  inline-block h-[450px] w-[446px]'>
+							<br />
+							<h6 className={styles.greeting_text}>Hi!👋</h6>
+							<p className='mt-[10px]  text-desc '>
+								Welcome to MacPaw Bootcamp 2023
+							</p>
 
-						<p className='mt-[60px] text-xl font-medium'>
-							Lets start using The Cat API
-						</p>
+							<p className='mt-[60px] text-xl font-medium'>
+								Lets start using The Cat API
+							</p>
 
-						<nav>
-							<ul className='mt-5 flex items-center justify-center gap-4'>
-								{navigationParams.map(({src, path, title, blurImg}) => {
-									return (
-										<NavifationCart
-											key={title}
-											src={src}
-											title={title}
-											path={path}
-											blurImg={blurImg}
-										/>
-									);
-								})}
-							</ul>
-						</nav>
-					</aside>
-					<section className='w-[53.86%] h-full -top-[27.2px] relative'>
+							<nav>
+								<ul className='mt-5 flex items-center justify-center gap-4'>
+									{navigationParams.map(({src, path, title, blurImg}) => {
+										return (
+											<NavifationCart
+												key={title}
+												src={src}
+												title={title}
+												path={path}
+												blurImg={blurImg}
+											/>
+										);
+									})}
+								</ul>
+							</nav>
+						</aside>
+					</div>
+					<section className='root_section w-[53.86%] h-full -top-[27.2px] relative'>
 						{children}
 					</section>
 				</main>

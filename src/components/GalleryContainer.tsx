@@ -3,39 +3,37 @@ import {useCallback, useEffect, useMemo, useState} from 'react';
 import useBreadSearch from '@/hooks/useBreadSearch';
 import GalleryInput from './GalleryInput';
 import PaginationBtn from './PaginationBtn';
-import {MimeContent, Order} from '@/types';
+import {BreedsType, MimeContent, Order} from '@/types';
 
 interface GalleryProps {
+	breedNames: string[];
 	setQueryBreed: (breed: string) => any;
 	setQueryLimit: (limit: string) => any;
 	setFetchCartOrder: (order: Order) => any;
 	setMimeType: (mime: 'static' | 'animated') => any;
+	setNumberPage: (page: string) => any;
 }
 
 function GalleryContainer({
+	breedNames,
 	setQueryBreed,
 	setQueryLimit,
 	setFetchCartOrder,
 	setMimeType,
+	setNumberPage,
 }: GalleryProps) {
 	const [localBreedNames, setLocalBreedNames] = useState<string[]>([]);
 
-	const {breedDataObj, setBreedDataObj} = useBreadSearch();
-
-	const mamorizedBreedNames = useMemo(() => {
-		return breedDataObj.map((breedObj) => breedObj.name);
-	}, [breedDataObj]);
-
 	const modifyDefaultBreedNamesList = useCallback(() => {
-		setLocalBreedNames(() => ['None', ...mamorizedBreedNames]);
-	}, [mamorizedBreedNames]);
+		setLocalBreedNames(() => ['None', ...breedNames]);
+	}, [breedNames]);
 
 	useEffect(() => {
 		modifyDefaultBreedNamesList();
 	}, [modifyDefaultBreedNamesList]);
 
 	return (
-		<ul className='!self-start min-h-[156px] mt-5 px-5 bg-prewhite rounded-[20px] flex justify-between items-center gap-x-5 gap-y-0 flex-wrap pb-5'>
+		<ul className='min-h-[156px] mb-5 mt-5 px-5 bg-prewhite rounded-[20px] flex justify-between items-center gap-x-5 gap-y-0 flex-wrap pb-5'>
 			<GalleryInput
 				title='order'
 				selectOptList={['Random', 'Desc', 'Asc']}
@@ -62,7 +60,7 @@ function GalleryContainer({
 				]}
 				setPropertyFuntion={setQueryLimit}
 			>
-				<PaginationBtn />
+				<PaginationBtn setNumberPage={setNumberPage} />
 			</GalleryInput>
 		</ul>
 	);

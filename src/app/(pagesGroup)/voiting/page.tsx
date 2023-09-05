@@ -62,41 +62,42 @@ function VoitingPage() {
 	return (
 		<PageContainer>
 			<BackArrow_Title title='Voiting' />
-			<figure className={figureStyles} ref={figureRef}>
-				{/* We receive just one cat cart item on this page */}
-				{catCarts[0]?.url ? (
-					<Image
-						key={catCarts[0].id}
-						src={catCarts[0].url}
-						alt='Cat photo'
-						fill
-						sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 30vw'
-						className='rounded-[25px] object-cover'
-						onLoad={() => setIsLoaded(true)}
-						priority
-					/>
-				) : null}
+			<div className='w-full h-full min-h-max'>
+				<figure className={figureStyles} ref={figureRef}>
+					{/* We receive just one cat cart item on this page */}
+					{catCarts[0]?.url ? (
+						<Image
+							key={catCarts[0].id}
+							src={catCarts[0].url}
+							alt='Cat photo'
+							fill
+							sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 30vw'
+							className='rounded-[25px] object-cover'
+							onLoad={() => setIsLoaded(true)}
+							priority
+						/>
+					) : null}
 
-				<UserImageFeedbackTriggets
-					handleUserAction={(actionObj: IUserAction) =>
-						handleUserAction(actionObj)
-					}
-					catId={catCarts[0]?.id}
-					loading={!isLoaded}
-				/>
-			</figure>
-
-			{actionRecords.map(({action, time, catId, category}) => {
-				return (
-					<ActionInfoBar
-						key={catId}
-						time={time}
-						catId={catId}
-						action={action}
-						category={category}
+					<UserImageFeedbackTriggets
+						handleUserAction={(actionObj: IUserAction) =>
+							handleUserAction(actionObj)
+						}
+						catId={catCarts[0]?.id}
+						loading={!isLoaded}
 					/>
-				);
-			})}
+				</figure>
+				{actionRecords.map(({action, time, catId, category}) => {
+					return (
+						<ActionInfoBar
+							key={catId}
+							time={time}
+							catId={catId}
+							action={action}
+							category={category}
+						/>
+					);
+				})}
+			</div>
 		</PageContainer>
 	);
 }

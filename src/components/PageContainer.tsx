@@ -8,7 +8,7 @@ interface IVoitingPageProps extends ILayoutProps {}
 function PageContainer({children}: IVoitingPageProps) {
 	return (
 		<>
-			<section className='min-h-[501px] h-full mt-2.5 py-5 px-5 bg-white rounded-[20px] flex items-start justify-start gap-x-2.5 flex-wrap'>
+			<section className='relative main_container w-full mt-5 py-5 px-5 bg-white rounded-[20px]'>
 				{children}
 			</section>
 		</>
