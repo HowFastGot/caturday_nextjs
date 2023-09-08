@@ -6,7 +6,7 @@ export default function Home() {
 	return (
 		<>
 			<section className='h-[840px]'>
-				<div className='flex h-full w-[680px] rounded-[20px] bg-pale_peach'>
+				<div className='flex h-full w-[680px] rounded-[20px] bg-pale_peach dark:bg-less_black'>
 					<Image
 						src={GirlMainImg}
 						alt='Girl photo'

@@ -6,8 +6,8 @@ const defaultHeaders = {
 export const useHttp = () => {
 	const request = useCallback(
 		async <T>(
-			url: string,
-			method: 'GET' | 'POST' = 'GET',
+			url: string | URL,
+			method: 'GET' | 'POST' | 'DELETE' = 'GET',
 			body: any = null,
 			headers: Partial<{
 				'Content-Type'?: string;

@@ -12,7 +12,7 @@ import Logo from '/public/assets/logo/logo.svg';
 import VoteIconImg from '/public/assets/navigation/vote-table.svg';
 import BreedIconImg from '/public/assets/navigation/pet-breeds.svg';
 import GalleryIconImg from '/public/assets/navigation/images-search.svg';
-
+import ThemeToggler from '@/components/ThemeToggler';
 
 type NavigationCart = {
 	src: string;
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 };
 
 const bodyStyles = clsx(
-	'bg-prewhite max-w-container mx-auto pl-2.5 pr-5 min-h-max',
+	'bg-prewhite dark:bg-black max-w-container mx-auto pl-2.5 pr-5 min-h-max',
 	jost.className
 );
 
@@ -72,27 +72,36 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={bodyStyles}>
-				<header className=' pt-[30px]'>
-					<Link href='/' className='inline-block'>
-						<Image
-							src={Logo}
-							alt='caturday logo'
-							quality={100}
-							className='rounded-xl'
-						/>
-					</Link>
+				<header className='pt-[30px] flex justify-start items-center gap-[260px]'>
+					<div className='flex items-center justify-start gap-2'>
+						<Link href='/' className='inline-block'>
+							<Image
+								src={Logo}
+								alt='caturday logo'
+								quality={100}
+								className='rounded-xl'
+							/>
+						</Link>
+						<span className='text-black dark:text-white font-bold text-[21px] font-jost'>
+							PetsPaw
+						</span>
+					</div>
+
+					<ThemeToggler />
 				</header>
 
-				<main className='relative main-wrapper flex justify-between items-start gap-20'>
+				<main className='relative main-wrapper flex justify-between gap-20'>
 					<div className='relative sticky-container h-full'>
 						<aside className='sticky top-2.5 mt-20  inline-block h-[450px] w-[446px]'>
 							<br />
-							<h6 className={styles.greeting_text}>Hi!👋</h6>
+							<h6 className={`${styles.greeting_text} dark:text-white`}>
+								Hi!👋
+							</h6>
 							<p className='mt-[10px]  text-desc '>
 								Welcome to MacPaw Bootcamp 2023
 							</p>
 
-							<p className='mt-[60px] text-xl font-medium'>
+							<p className='mt-[60px] text-xl font-medium dark:text-white'>
 								Lets start using The Cat API
 							</p>
 

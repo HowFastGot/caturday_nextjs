@@ -76,7 +76,6 @@ function UploadModal() {
 			try {
 				memoGetFileFromPastedImg(fileInput)
 					.then((res) => {
-						console.log('memoGetFileFromPastedImg Response', res);
 						if (!res?.file)
 							throw new Error(
 								'Error occured while loading a file from local system!'

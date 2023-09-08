@@ -46,11 +46,15 @@ export interface ICatCart {
 	url: string;
 	width: number;
 }
+
+export type ActionCategory = 'Likes' | 'Favourites' | 'Dislikes';
+
 export interface IUserAction {
 	action: string;
 	time: number;
 	catId: string;
-	category: 'Likes' | 'Favourites' | 'Dislikes';
+	category: ActionCategory;
+	voteId?: number;
 }
 
 export type Order = 'Random' | 'Desc' | 'Asc';
@@ -73,3 +77,41 @@ export interface iServerUploadResp {
 }
 
 export type Path = '/dislike-cats' | '/favorite-cats' | '/like-cats';
+export type UrlPattern =
+	| 'https://api.thecatapi.com/v1/votes'
+	| 'https://api.thecatapi.com/v1/favourites';
+
+export interface IVotePost {
+	image_id: string;
+	value?: number | null; // null - if we send favorite post request!
+	sub_id: string;
+}
+
+export interface IServerFeedback {
+	message: string;
+	id: number;
+	image_id: string;
+	sub_id: string;
+	value: number;
+	country_code: string;
+}
+export interface IServerCatsResp {
+	id: number;
+	image_id: string;
+	sub_id: string;
+	created_at: string;
+	value: number;
+	country_code: string;
+	image: {
+		id: string;
+		url: string;
+	};
+}
+
+type CatCartType = Pick<ICatCart, 'id' | 'url'>;
+type ServerCatsRespType = Pick<IServerCatsResp, 'value'>;
+
+type RenamedServerCatsRespType = CatCartType &
+	ServerCatsRespType & {serverId: IServerCatsResp['id']};
+
+export interface ICombinedServerResp extends RenamedServerCatsRespType {}

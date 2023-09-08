@@ -1,8 +1,15 @@
 'use client';
 
-import {useState, useEffect, useRef, useMemo} from 'react';
-import {ICatCart, IUserAction} from '@/types';
+import {useState, useEffect, useRef, useCallback} from 'react';
 import Image from 'next/image';
+
+import {
+	ICatCart,
+	IServerFeedback,
+	IUserAction,
+	IVotePost,
+	UrlPattern,
+} from '@/types';
 
 import {useHttp} from '@/hooks/useHttpHook';
 import PageContainer from '@/components/PageContainer';
@@ -10,10 +17,13 @@ import clsx from 'clsx';
 import UserImageFeedbackTriggets from '@/components/UserImageFeedbackTriggets';
 import ActionInfoBar from '@/components/ActionInfoBar';
 import BackArrow_Title from '@/components/BackArrow_Title';
+import changeUserActionObj from '@/utils/voitingPage/changeUserActionObj';
+import generateVoteRequestObj from '@/utils/generateVoteRequestObj/generateVoteRequestObj';
 
 function VoitingPage() {
 	const [catCarts, setCatCarts] = useState<ICatCart[]>([]);
 	const [actionRecords, setActionRecords] = useState<IUserAction[]>([]);
+	const [paginationPage, setPaginationPage] = useState(0);
 
 	const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
@@ -31,21 +41,74 @@ function VoitingPage() {
 		}
 	);
 
-	const handleUserAction = (actionObj: IUserAction) => {
-		if (actionRecords.length + 1 <= 4) {
-			setActionRecords([actionObj, ...actionRecords]);
-		} else {
-			const immutableActionRecords: IUserAction[] = actionRecords.splice(0);
+	const memoGenerateVoteRequestObj = useCallback(generateVoteRequestObj, []);
 
-			const removedActionRecord = immutableActionRecords.splice(2, 1);
+	const uploadCartToServer = useCallback(
+		(userFeedbackInfoObj: IVotePost) => {
+			const baseUrl =
+				process.env.NODE_ENV === 'production'
+					? 'https://caturday-nextjs.vercel.app'
+					: 'http://localhost:3000';
 
-			setActionRecords([actionObj, ...immutableActionRecords]);
-		}
-	};
+			const favoriteUrl = new URL('/api/favorite', baseUrl);
+			const votingUrl = new URL('/api/voiting', baseUrl);
+			const reqUrl: URL = userFeedbackInfoObj.value ? votingUrl : favoriteUrl;
 
-	const memoCatCart = useMemo(() => {
-		return actionRecords[0];
-	}, [actionRecords]);
+			request<IServerFeedback>(
+				reqUrl,
+				'POST',
+				JSON.stringify(userFeedbackInfoObj)
+			)
+				.then((response) => {
+					setActionRecords((prev) => {
+						const immutableActionsArr = prev.slice();
+
+						const lastAddedActionObj = immutableActionsArr.shift();
+
+						if (!lastAddedActionObj) {
+							return prev;
+						}
+
+						const newActionObj: IUserAction = changeUserActionObj(
+							lastAddedActionObj,
+							response
+						);
+
+						return [newActionObj, ...immutableActionsArr];
+					});
+
+					console.log(`Server <"${reqUrl}"> response`, response);
+				})
+				.catch((e) => console.log(e));
+		},
+		[request]
+	);
+
+	const handleUserAction = useCallback(
+		(actionObj: IUserAction) => {
+			// fetch new cat cart for voiting or favorite
+			//
+			if (actionRecords.length + 1 <= 4) {
+				setActionRecords((prevRecords) => [actionObj, ...prevRecords]);
+			} else {
+				const immutableActionRecords: IUserAction[] = actionRecords.slice(0);
+				immutableActionRecords.splice(2, 1);
+
+				setActionRecords([actionObj, ...immutableActionRecords]);
+			}
+
+			// Create POST req to the server
+			const requestObj = memoGenerateVoteRequestObj(
+				actionObj.category,
+				actionObj.catId
+			);
+			uploadCartToServer(requestObj);
+
+			// change  the estimated cat cart
+			setPaginationPage((prev) => prev + 1);
+		},
+		[actionRecords, uploadCartToServer, memoGenerateVoteRequestObj]
+	);
 
 	useEffect(() => {
 		setIsLoaded(false);
@@ -56,8 +119,10 @@ function VoitingPage() {
 			setCatCarts(catCartsArr);
 		};
 
-		fetchCatCards('https://api.thecatapi.com/v1/images/search');
-	}, [memoCatCart, request]);
+		fetchCatCards(
+			`http://localhost:3000/api/voiting?paginationPage=${paginationPage}`
+		);
+	}, [request, paginationPage]);
 
 	return (
 		<PageContainer>
@@ -70,30 +135,30 @@ function VoitingPage() {
 							key={catCarts[0].id}
 							src={catCarts[0].url}
 							alt='Cat photo'
-							fill
 							sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 30vw'
 							className='rounded-[25px] object-cover'
 							onLoad={() => setIsLoaded(true)}
 							priority
+							fill
 						/>
 					) : null}
 
 					<UserImageFeedbackTriggets
-						handleUserAction={(actionObj: IUserAction) =>
-							handleUserAction(actionObj)
-						}
+						handleUserAction={handleUserAction}
 						catId={catCarts[0]?.id}
 						loading={!isLoaded}
 					/>
 				</figure>
-				{actionRecords.map(({action, time, catId, category}) => {
+				{actionRecords.map(({action, time, catId, category, voteId}) => {
 					return (
 						<ActionInfoBar
-							key={catId}
+							key={time}
 							time={time}
 							catId={catId}
 							action={action}
 							category={category}
+							voteId={voteId}
+							setActionRecords={setActionRecords}
 						/>
 					);
 				})}

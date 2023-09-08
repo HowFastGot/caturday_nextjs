@@ -2,7 +2,7 @@ import {IPastedImg} from '@/types';
 
 const getFileFromPastedImg = async (inputElem: HTMLInputElement) => {
 	const imgFileObj = inputElem.files && inputElem?.files[0];
-	console.log(imgFileObj);
+
 
 	if (!imgFileObj) return;
 

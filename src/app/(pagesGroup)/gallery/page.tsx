@@ -145,6 +145,7 @@ function GalleryPage() {
 					Loading Gallery Grid Container
 				</div>
 			) : (
+				// @ts-expect-error
 				<GalleryGridContainer catCarts={catCarts} />
 			)}
 		</PageContainer>

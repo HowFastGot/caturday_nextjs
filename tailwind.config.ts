@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+	darkMode: 'class',
 	content: [
 		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
@@ -25,6 +26,7 @@ const config: Config = {
 			borderColor: 'rgba(255, 255, 255, 0.60)',
 			catCartHover: 'rgba(255, 134, 142, 0.60)',
 			modal_bg: 'rgba(29, 29, 29, 0.60)',
+			dark_toggler: 'rgba(255, 134, 142, 0.2)',
 		},
 		extend: {
 			colors: {

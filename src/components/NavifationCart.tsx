@@ -28,9 +28,12 @@ function NavifationCart({path, src, title, blurImg}: INavifationCartProps) {
 			'border-pale_peach': path === pathName,
 		}
 	);
-	const navigationBtnStyles = clsx('nav-cart-btn', {
-		active: path === pathName,
-	});
+	const navigationBtnStyles = clsx(
+		'nav-cart-btn dark:bg-less_black dark:text-peach dark:hover:bg-black',
+		{
+			'active dark:active': path === pathName,
+		}
+	);
 
 	return (
 		<>

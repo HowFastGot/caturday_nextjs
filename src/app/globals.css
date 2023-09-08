@@ -139,6 +139,7 @@ h6 {
   }
   .nav-cart-btn.active {
     @apply bg-peach text-white
+    
   }
 
   .flex-wrapper {
