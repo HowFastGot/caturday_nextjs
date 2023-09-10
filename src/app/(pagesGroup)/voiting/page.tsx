@@ -42,7 +42,8 @@ function VoitingPage() {
 	);
 
 	const memoGenerateVoteRequestObj = useCallback(generateVoteRequestObj, []);
-
+	console.log(process.env.NODE_ENV);
+	
 	const uploadCartToServer = useCallback(
 		(userFeedbackInfoObj: IVotePost) => {
 			const baseUrl =
@@ -50,7 +51,6 @@ function VoitingPage() {
 					? 'https://caturday-nextjs.vercel.app'
 					: 'http://localhost:3000';
 
-					console.log(process.env.NODE_ENV);
 			const favoriteUrl = new URL('/api/favorite', baseUrl);
 			const votingUrl = new URL('/api/voiting', baseUrl);
 			const reqUrl: URL = userFeedbackInfoObj.value ? votingUrl : favoriteUrl;
