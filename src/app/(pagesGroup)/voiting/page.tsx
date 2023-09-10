@@ -52,6 +52,7 @@ function VoitingPage() {
 
 			const favoriteUrl = new URL('/api/favorite', baseUrl);
 			const votingUrl = new URL('/api/voiting', baseUrl);
+			// request to either vote or favorite pages
 			const reqUrl: URL = userFeedbackInfoObj.value ? votingUrl : favoriteUrl;
 
 			request<IServerFeedback>(
@@ -119,9 +120,14 @@ function VoitingPage() {
 			setCatCarts(catCartsArr);
 		};
 
-		fetchCatCards(
-			`http://localhost:3000/api/voiting?paginationPage=${paginationPage}`
-		);
+		const baseUrl =
+			process.env.NODE_ENV === 'production'
+				? 'https://caturday-nextjs.vercel.app'
+				: 'http://localhost:3000';
+
+		const voteNewCartUrl = new URL('/api/voiting', baseUrl);
+
+		fetchCatCards(`${voteNewCartUrl}?paginationPage=${paginationPage}`);
 	}, [request, paginationPage]);
 
 	return (
