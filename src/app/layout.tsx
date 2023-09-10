@@ -122,7 +122,7 @@ export default function RootLayout({
 							</nav>
 						</aside>
 					</div>
-					<section className='root_section w-[53.86%] h-full -top-[27.2px] relative'>
+					<section className='root_section w-[53.86%] h-full -top-[44px] relative'>
 						{children}
 					</section>
 				</main>

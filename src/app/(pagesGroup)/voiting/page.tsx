@@ -120,6 +120,8 @@ function VoitingPage() {
 			setCatCarts(catCartsArr);
 		};
 
+		console.log(process.env.NODE_ENV);
+
 		const baseUrl =
 			process.env.NODE_ENV === 'production'
 				? 'https://caturday-nextjs.vercel.app'
