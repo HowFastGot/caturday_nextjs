@@ -46,10 +46,8 @@ function VoitingPage() {
 	
 	const uploadCartToServer = useCallback(
 		(userFeedbackInfoObj: IVotePost) => {
-			const baseUrl =
-				process.env.NODE_ENV === 'production'
-					? 'https://caturday-nextjs.vercel.app'
-					: 'http://localhost:3000';
+			const baseUrl = 'https://caturday-nextjs.vercel.app';
+		
 
 			const favoriteUrl = new URL('/api/favorite', baseUrl);
 			const votingUrl = new URL('/api/voiting', baseUrl);
