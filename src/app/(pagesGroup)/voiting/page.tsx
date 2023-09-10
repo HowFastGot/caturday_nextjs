@@ -42,12 +42,13 @@ function VoitingPage() {
 	);
 
 	const memoGenerateVoteRequestObj = useCallback(generateVoteRequestObj, []);
-	console.log(process.env.NODE_ENV);
-	
+
 	const uploadCartToServer = useCallback(
 		(userFeedbackInfoObj: IVotePost) => {
-			const baseUrl = 'https://caturday-nextjs.vercel.app';
-		
+			const baseUrl =
+				process.env.NODE_ENV === 'production'
+					? 'https://caturday-nextjs.vercel.app'
+					: 'http://localhost:3000';
 
 			const favoriteUrl = new URL('/api/favorite', baseUrl);
 			const votingUrl = new URL('/api/voiting', baseUrl);
